@@ -1,0 +1,20 @@
+
+%%-*- mode: erlang -*-
+%% emq_kafka_bridge config mapping
+{mapping, "bridge.kafka.server", "emq_kafka_bridge.server", [
+  {default, {"127.0.0.1", 9092}},
+  {datatype, [integer, ip, string]}
+]}.
+
+{translation, "emq_kafka_bridge.server", fun(Conf) ->
+  {KHost, KPort} =
+  case cuttlefish:conf_get("bridge.kafka.server", Conf) of
+    {Ip, Port} -> {Ip, Port};
+    S          -> case string:tokens(S, ":") of
+                    [Domain]       -> {Domain, 9092};
+                    [Domain, Port] -> {Domain, list_to_integer(Port)}
+                  end
+    end,
+  [{host, KHost},
+   {port, KPort}]
+end}.
