@@ -141,9 +141,9 @@ on_message_publish(Message, _Env) ->
 %% ===================================================================
 
 % Produce to kafka, decide produce strategy here
-produce_to_kafka(data) ->
+produce_to_kafka(Data) ->
     % Response = ekaf:produce_async_batched(<<"broker_message">>, list_to_binary(Json)),
-    Response = ekaf:produce_async(<<"broker_message">>, list_to_binary(data)),
+    Response = ekaf:produce_async(<<"broker_message">>, list_to_binary(Data)),
     io:format("produce response ~p~n",[Response]).
 
 % Configure ekaf from environmental variables
