@@ -69,7 +69,7 @@ keys() ->
 
 parse_servers(Value) ->
     case string:tokens(Value, ":") of
-        [Domain]       -> {Domain, 3306};
+        [Domain]       -> {Domain, 9092};
         [Domain, Port] -> {Domain, list_to_integer(Port)}
     end.
 
